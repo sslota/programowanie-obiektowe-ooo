@@ -1,4 +1,4 @@
-package agh.ics.oop;
+/*package agh.ics.oop;
 
 import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,4 +84,4 @@ public class TestIntegracyjny {
         assertArrayEquals(output3, parser.parse(args3));
 
     }
-}
+}*/
