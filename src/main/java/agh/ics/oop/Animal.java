@@ -1,25 +1,32 @@
 package agh.ics.oop;
+import java.util.ArrayList;
 
-public class Animal {
-    private MapDirection orientation = MapDirection.NORTH;
-    private Vector2d position = new Vector2d(2, 2);
+public class Animal implements IMapElement {
+    private Vector2d position;
+    private MapDirection orientation;
     private IWorldMap map;
+    private ArrayList<IPositionChangeObserver> observers;
 
-    public Animal(IWorldMap map){
-        this.map = map;
-    }
 
     public Animal(){
+        this.orientation = MapDirection.NORTH;
+        this.position = new Vector2d(2, 2);
+        this.observers = new ArrayList<>();
     }
 
-    public Animal(IWorldMap map, Vector2d initialPosition) {
+    public Animal(IWorldMap map){
+        this();
         this.map = map;
-        this.position = initialPosition;
     }
 
+    public Animal(IWorldMap map, Vector2d initialPosition){
+        this(map);
+        this.position = initialPosition;
+        this.orientation = MapDirection.NORTH;
+    }
 
-    public String toString() {
-        return switch(this.orientation) {
+    public String toString(){
+        return switch (this.orientation){
             case NORTH -> "N";
             case SOUTH -> "S";
             case WEST ->  "W";
@@ -28,36 +35,55 @@ public class Animal {
         };
     }
 
-    boolean isAt(Vector2d position) {
-        return position.equals(this.position);
-    }
-
-    MapDirection getDirection() {
+    public MapDirection getDirection(){
         return this.orientation;
     }
 
-    Vector2d getPosition() {
+
+    @Override
+    public Vector2d getPosition() {
         return this.position;
     }
 
-    public void move(MoveDirection director) {
-        switch (director) {
-            case RIGHT -> this.orientation = orientation.next();
-            case LEFT -> this.orientation = orientation.previous();
-            case FORWARD -> {
-                Vector2d newposition = this.position.add(orientation.toUnitVector());
-                if(this.map.canMoveTo(newposition)){
-                    this.position = newposition;
-                }
+    void addObserver(IPositionChangeObserver observer){
+        this.observers.add(observer);
+    }
+    void removeObserver (IPositionChangeObserver observer){
+        this.observers.remove(observer);
+    }
 
-            }
-            case BACKWARD -> {
-                Vector2d newposition = this.position.subtract(orientation.toUnitVector());
-                if(this.map.canMoveTo(newposition)){
-                    this.position = newposition;
-                }
+    private void positionChange(Vector2d oldPosition, Vector2d newPosition){
+        observers.forEach(observer -> observer.positionChanged(oldPosition,newPosition));
+    }
 
-            }
+    public void move(MoveDirection direction){
+        Vector2d newposition;
+        switch (direction) {
+            case RIGHT :
+                this.orientation = this.orientation.next();
+                break;
+            case LEFT:
+                this.orientation = this.orientation.previous();
+                break;
+            case FORWARD :
+                newposition = this.position.add(this.orientation.toUnitVector());
+                if (this.map.canMoveTo(newposition)) {
+                    Vector2d oldPosition = this.position;
+                    this.position = newposition;
+                    positionChange(oldPosition, newposition);
+                }
+                break;
+
+            case BACKWARD:
+                newposition = this.position.subtract(this.orientation.toUnitVector());
+                if (this.map.canMoveTo(newposition)) {
+                    Vector2d oldPosition = this.position;
+                    this.position = newposition;
+                    positionChange(oldPosition, newposition);
+                }
+                break;
+            default:
+
         }
     }
 }

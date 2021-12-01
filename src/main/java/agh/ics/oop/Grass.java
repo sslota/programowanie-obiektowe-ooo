@@ -1,17 +1,17 @@
 package agh.ics.oop;
 
-public class Grass {
-    private final Vector2d position;
+public class Grass implements IMapElement {
 
-    public Grass(Vector2d position) {
-        this.position = position;
+    private final Vector2d grassPosition;
+
+    public Grass(Vector2d grassPosition){
+        this.grassPosition = grassPosition;
     }
-
+    @Override
     public Vector2d getPosition() {
-        return position;
+        return grassPosition;
     }
-
-    public String toString() {
+    public String toString(){
         return "*";
     }
 }

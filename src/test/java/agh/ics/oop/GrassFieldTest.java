@@ -59,7 +59,6 @@ public class GrassFieldTest {
 
     @Test
     public void testRun(){
-        ArrayList<Animal> animals;
         String[] moves = new String[]{"f",  "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
         MoveDirection[] directions = new OptionsParser().parse(moves);
         Vector2d[] positions = {xolo.getPosition(), blobfish.getPosition()};
@@ -67,11 +66,8 @@ public class GrassFieldTest {
 
         engine.run();
 
-        animals = ((GrassField) map).getAnimal();
-        assertEquals(animals.get(0).getPosition(), new Vector2d(3,-1));
-        assertEquals(animals.get(1).getPosition(), new Vector2d(2,9));
-        assertEquals(animals.get(0).getDirection(),MapDirection.SOUTH);
-        assertEquals(animals.get(1).getDirection(), MapDirection.NORTH);
+        assertTrue(map.objectAt(new Vector2d(2, -1)) instanceof Animal);
+        assertTrue(map.objectAt(new Vector2d(3, 7)) instanceof Animal);
 
     }
 }

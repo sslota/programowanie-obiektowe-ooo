@@ -1,31 +1,28 @@
 package agh.ics.oop;
 
-import javax.crypto.spec.RC2ParameterSpec;
 import java.util.ArrayList;
 
 public class SimulationEngine implements IEngine {
-    private IWorldMap map;
-    private MoveDirection[] moves;
-    private Animal[] animals;
+    private final IWorldMap map;
+    private final MoveDirection[] moves;
+    private final ArrayList<Animal> animals;
 
     public SimulationEngine(MoveDirection[] moves, IWorldMap map, Vector2d[] startingPositions){
-        for (Vector2d position:startingPositions) {
-            map.place(new Animal(map, position));
-        }
-        this.moves = moves;
         this.map = map;
+        this.moves = moves;
+        this.animals = new ArrayList<>();
+
+        for (Vector2d pos: startingPositions){
+            Animal animal = new Animal(map, pos);
+            if (map.place(animal)) {
+                animals.add(animal);
+            }
+        }
     }
 
-    public void run() {
-        RectangularMap map2 = (RectangularMap) map;
-        int i = 0;
-        ArrayList<Animal> animals = map2.getAnimalList();
-        int animalsNumber = animals.size();
-        System.out.println(map2);
-        for(MoveDirection move:moves) {
-            animals.get(i % animalsNumber).move(move);
-            i += 1;
+    public void run(){
+        for (int i=0; i<moves.length; i++) {
+            animals.get(i % animals.size()).move(moves[i]);
         }
-        System.out.println(map2);
     }
 }
