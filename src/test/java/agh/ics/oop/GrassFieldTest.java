@@ -28,8 +28,16 @@ public class GrassFieldTest {
     public void testPlace(){
         assertTrue(map.place(muskox));
         assertTrue(map.place(xolo));
-        assertFalse(map.place(new Animal()));
-        assertFalse(map.place(new Animal(map, new Vector2d(1,1))));
+        try{
+            map.place(new Animal(map, new Vector2d(1,1)));
+        }catch(IllegalArgumentException ex){
+            assertEquals(ex.getMessage(), "(1,1) we we innego miejsca poszukaj ok? ok");
+        }
+        try{
+            map.place(new Animal(map, new Vector2d(2,2)));
+        }catch(IllegalArgumentException ex){
+            assertEquals(ex.getMessage(),"(2,2) we we innego miejsca poszukaj ok? ok");
+        }
     }
 
     @Test

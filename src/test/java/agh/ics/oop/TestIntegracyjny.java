@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIntegracyjny {
 
+
     @Test
     public void orientationTest(){
         IWorldMap map = new RectangularMap(10, 10);
@@ -58,19 +59,24 @@ public class TestIntegracyjny {
 
     @Test
     public void interpretationTest(){
-        IWorldMap map = new RectangularMap(10, 10);
-        Animal a = new Animal(map, new Vector2d(2, 2));
-        String [] moves = new String[]{"f", "muskox", "right", "xolo", "left", "l", "civet", "backward", "blobfish"};
-        OptionsParser p = new OptionsParser();
-        for(MoveDirection move : p.parse(moves)){a.move(move);}
+        try{
+            IWorldMap map = new RectangularMap(10, 10);
+            Animal a = new Animal(map, new Vector2d(2, 2));
+            String [] moves = new String[]{"f", "right", "muskox", "left", "l", "xolo", "backward"};
+            OptionsParser p = new OptionsParser();
+            for(MoveDirection move : p.parse(moves)){a.move(move);}
+        }catch(IllegalArgumentException iae){
+            assertEquals(iae.getMessage(),"gdzie mi z tym piżmowołem arktycznym");
+        }
 
-        assertEquals(a.getPosition(),new Vector2d(3,3));
-        assertEquals(a.getDirection(),MapDirection.WEST);
-
-        String [] moves1 = new String[]{"muskox", "xolo", "civet", "blobfish", "dragonfly"};
-        for(MoveDirection move : p.parse(moves1)){a.move(move);}
-
-        assertEquals(a.getPosition(),new Vector2d(3,3));
-        assertEquals(a.getDirection(),MapDirection.WEST);
+        try{
+            IWorldMap map = new RectangularMap(10, 10);
+            Animal a = new Animal(map, new Vector2d(2, 2));
+            String [] moves = new String[]{"f", "right", "left", "l", "backward","F"};
+            OptionsParser p = new OptionsParser();
+            for(MoveDirection move : p.parse(moves)){a.move(move);}
+        }catch(IllegalArgumentException iae){
+            assertEquals(iae.getMessage(),"nie no tera to poleciałeś z tym F");
+        }
     }
 }

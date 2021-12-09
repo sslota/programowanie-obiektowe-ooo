@@ -26,8 +26,9 @@ public class GrassField extends AbstractWorldMap{
             }
             while(isOccupied(new Vector2d(x,y)) && (objectAt(new Vector2d(x,y)) instanceof Grass) );
             Grass kepek = new Grass(new Vector2d(x,y));
+            grass.put(kepek.getPosition(), kepek);
             mapElements.add(kepek);
-            this.grass.put(kepek.getPosition(), kepek);
+            boundary.addElements(kepek);
         }
     }
 
@@ -46,21 +47,11 @@ public class GrassField extends AbstractWorldMap{
     }
 
     public Vector2d getLeftCorner(){
-        Vector2d leftcorner = mapElements.get(0).getPosition();
-
-        for(IMapElement element : mapElements){
-            leftcorner = leftcorner.lowerLeft(element.getPosition());
-        }
-        return leftcorner;
+        return boundary.getLeftCorner();
     }
 
 
     public Vector2d getRightCorner(){
-        Vector2d rightcorner = mapElements.get(0).getPosition();
-
-        for(IMapElement element : mapElements){
-            rightcorner = rightcorner.upperRight(element.getPosition());
-        }
-        return rightcorner;
+        return boundary.getRightCorner();
     }
 }
