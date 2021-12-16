@@ -42,4 +42,10 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     public String toString() {
         return mapVisualizer.draw(getLeftCorner(), getRightCorner());
     }
+    public ArrayList<IMapElement> getMapElements() {
+        return mapElements;
+    }
+    public MapBoundary getMapBoundary() {
+        return boundary;
+    }
 }

@@ -4,20 +4,20 @@ import agh.ics.oop.gui.App;
 import javafx.application.Application;
 
 public class World {
-   /* public static void run(Direction[] ruchy) {
-        System.out.println("Start");
-        for (Direction ruch : ruchy) {
-            switch (ruch) {
-                case FORWARD -> System.out.println("Zwierzak idzie do przodu");
-                case BACKWARD -> System.out.println("Zwierzak idzie do tyłu");
-                case RIGHT -> System.out.println("Zwierzak skręca w prawo");
-                case LEFT -> System.out.println("Zwierzak skręca w lewo");
-                default -> {
-                }
-            }
-        }
-        System.out.println("Stop");
-    }*/
+    /* public static void run(Direction[] ruchy) {
+         System.out.println("Start");
+         for (Direction ruch : ruchy) {
+             switch (ruch) {
+                 case FORWARD -> System.out.println("Zwierzak idzie do przodu");
+                 case BACKWARD -> System.out.println("Zwierzak idzie do tyłu");
+                 case RIGHT -> System.out.println("Zwierzak skręca w prawo");
+                 case LEFT -> System.out.println("Zwierzak skręca w lewo");
+                 default -> {
+                 }
+             }
+         }
+         System.out.println("Stop");
+     }*/
     public static void main(String[] args) {
         Application.launch(App.class, args);
         /*try {
@@ -33,7 +33,7 @@ public class World {
             System.out.println("System zakończył działanie biblethump");
         } catch (IllegalArgumentException iae) {
             System.out.println(iae);*/
-        }
+    }
     /*public static Direction[] convert(String[] args) {
         int a = 0;
         Direction[] nowy = new Direction[args.length];

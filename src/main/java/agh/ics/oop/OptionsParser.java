@@ -4,9 +4,9 @@ public class OptionsParser {
     public MoveDirection[] parse(String[] args){
         int i = 0;
         for (String arg : args){
-                if (arg.equals("r") || arg.equals("right") || arg.equals("l") || arg.equals("left") || arg.equals("b") || arg.equals("backward") || arg.equals("f") || arg.equals("forward")) {
-                    i++;
-                }
+            if (arg.equals("r") || arg.equals("right") || arg.equals("l") || arg.equals("left") || arg.equals("b") || arg.equals("backward") || arg.equals("f") || arg.equals("forward")) {
+                i++;
+            }
         }
         MoveDirection[] result = new MoveDirection[i];
         i = 0;
